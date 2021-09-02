@@ -9,7 +9,7 @@
 
 # Javascript Deep Dive Study
 
-> [Javascript Deep Dive](http://www.yes24.com/Product/Goods/92742567?OzSrank=1)를 토대로 자바스크립트 개념을 공부하는 스터디입니다.
+> 코딩부트캠프에서 학습하는 내용에 대해 복습하고 리뷰하는 스터디 모임입니다.
 
 ---
 
@@ -22,7 +22,7 @@
 
 ---
 
-> 각자 학습하면서 도움이 된 자바스크립트 관련 **글/영상** 등 의 레퍼런스 링크 또는 직접 작성한 README.md를 통해 자유롭게 공유해주세요.
+> 각자 학습하면서 도움이 된 프론트엔드 기술 관련 **글/영상** 등 의 레퍼런스 링크 또는 직접 작성한 README.md를 통해 자유롭게 공유해주세요.
 
 ---
 
@@ -40,7 +40,7 @@
 
 - 매주 오프라인 미팅에서 한 주 동안 공부할 학습분량을 정합니다. (미정)
 - 학습분량 미정
-- 매주 학습분량은 [Projects Todo](https://github.com/COTOMO/workbook/projects/1)에서 확인할 수 있습니다.
+- 매주 학습분량은 [Projects Todo](https://github.com/COTOMO/studyrepo/projects/1)에서 확인할 수 있습니다.
 
 ### 스터디 규칙
 
@@ -67,6 +67,6 @@
 - [마크다운 사용법](https://www.markdowntutorial.com/)
 
 ### 기타사항
-- 자바스크립트 관련 질문은 [Discussion](https://github.com/COTOMO/workbook/discussions/1)을 활용해주세요.😊
+- 자바스크립트 관련 질문은 [Discussion](https://github.com/COTOMO/studyrepo/discussions/1)을 활용해주세요.😊
 
 ---
