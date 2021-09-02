@@ -1,5 +1,5 @@
 # 💻 코토모(코딩하는 토요일 모임) 
-> 코딩부트캠프에서 학습하는 내용에 대해 복습하고 리뷰하는 스터디 모임입니다. 👩🏻‍💻
+> 코딩부트캠프에서 학습하는 내용을 같이 공부하고 리뷰하는 스터디 모임입니다. 👩🏻‍💻
 ---
 [![Contributors](https://img.shields.io/github/contributors-anon/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)
 [![LastCommit](https://img.shields.io/github/last-commit/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)
