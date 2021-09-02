@@ -30,8 +30,7 @@
 # Study 진행방법
 
 ### 스터디 진행 방식
-> 한 주 학습 분량에 대해서 요약 정리 및 간단하게 발표 진행
-
+> 한 주 학습 분량에 대해서 요약 정리 및 간단하게 발표 진행 (미정)
 - PR 일정 : 미팅 시작 전까지 (PR 시간은 자유롭게)
 - 오프라인 미팅 일정 : 매주 토요일 오후 2시
 
@@ -54,8 +53,8 @@
 
 ### PR 규칙
 
-- 각자 공부한 내용을 주차별로 PR합니다.
-- PR은 본인의 폴더에만 진행합니다.
+- 각자 공부한 내용을 주차별로 PR합니다. 
+- PR은 본인의 폴더에만 진행합니다. 
 
 ### 피드백 규칙
 
@@ -66,6 +65,6 @@
 - [마크다운 사용법](https://www.markdowntutorial.com/)
 
 ### 기타사항
-- 자바스크립트 관련 질문은 [Discussion](https://github.com/COTOMO/studyrepo/discussions/1)을 활용해주세요.😊
+- 모든 학습에 대한 질문은 [Discussion](https://github.com/COTOMO/studyrepo/discussions/1)을 활용해주세요.😊
 
 ---
