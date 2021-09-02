@@ -38,7 +38,7 @@
 
 - 매주 오프라인 미팅에서 한 주 동안 공부할 학습분량을 정합니다. (미정)
 - 학습분량 미정
-- 매주 학습분량은 [Projects Todo](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo/projects/1)에서 확인할 수 있습니다.
+- 매주 학습분량은 [Projects Todo](https://github.com/COTOMO/studyrepo/projects/1)에서 확인할 수 있습니다.
 
 ### 스터디 규칙
 
