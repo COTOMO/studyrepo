@@ -1,5 +1,6 @@
-# 📔 코토모
-
+# 💻 코토모(코딩하는 토요일 모임) 
+> 코딩부트캠프에서 학습하는 내용에 대해 복습하고 리뷰하는 스터디 모임입니다. 👩🏻‍💻
+---
 [![Contributors](https://img.shields.io/github/contributors-anon/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)
 [![LastCommit](https://img.shields.io/github/last-commit/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)
 [![Commit](https://img.shields.io/github/commit-activity/w/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo)
@@ -7,11 +8,9 @@
 
 <br/>
 
-# 코토모(코딩하는 토요일 모임) 👩🏻‍💻
 
-> 코딩부트캠프에서 학습하는 내용에 대해 복습하고 리뷰하는 스터디 모임입니다.
 
----
+
 
 ### ⚽️ Study Goal
 
@@ -40,7 +39,7 @@
 
 - 매주 오프라인 미팅에서 한 주 동안 공부할 학습분량을 정합니다. (미정)
 - 학습분량 미정
-- 매주 학습분량은 [Projects Todo](https://github.com/COTOMO/studyrepo/projects/1)에서 확인할 수 있습니다.
+- 매주 학습분량은 [Projects Todo](https://github.com/Javascript-Deep-Dive-Study/JS-Deep-Dive-Study-Repo/projects/1)에서 확인할 수 있습니다.
 
 ### 스터디 규칙
 
