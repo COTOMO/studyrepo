@@ -823,3 +823,343 @@ user.sayHi(); // 원두
 
 - 외부 컨텍스트에 있는 `this`를 이용하고 싶은 경우 화살표 함수를 사용하면 된다.
 
+  
+
+## 4-5. 'new' 연산자와 생성자 함수
+
+- "new" 연산자와 생성자 함수를 사용하면 유사한 객체 여러 개를 쉽게 만들 수 있습니다.
+
+### 1. 생성자 함수(constructor function)
+
+- 함수 이름의 첫 글자는 대문자로 시작합니다.
+
+- 반드시 `"new"` 연산자를 붙여 실행합니다 . `"new"`와 함께 호출하면 내부에서 this가 암시적으로 만들어지고, 마지막엔 this가 반환됩니다.
+
+  ***생성자 함수를 사용하면 재사용할 수 있는 객체 생성 코드를 구현 가능.\***
+
+```js
+function User(name) {
+  this.name = name;
+  this.isAdmin = false;
+}
+
+let user = new User("Jack");
+
+alert(user.name); // Jack
+alert(user.isAdmin); // false
+```
+
+### 2. 생성자 내 메서드
+
+```js
+function User(name) {
+  this.name = name;
+
+  this.sayHi = function () {
+    alert("My name is: " + this.name);
+  };
+}
+
+let john = new User("John");
+
+john.sayHi(); // My name is: John
+
+/*
+john = {
+   name: "John",
+   sayHi: function() { ... }
+}
+*/
+```
+
+
+
+## 4-6. 옵셔널 체이닝 '?.'
+
+⚠️ 최근에 추가된 문법임.
+
+**옵셔널 체이닝(optional chaining) ?.을 사용하면 프로퍼티가 없는 중첩 객체를 에러 없이 안전하게 접근할 수 있습니다.**
+
+예를 들면, 사용자가 여러 명 있는데 그중 몇 명은 주소 정보를 가지고 있지 않다고 가정해보면, 이럴 때 user.address.street를 사용해 주소 정보에 접근하면 에러가 발생할 수 있다.
+
+### 옵셔널 체이닝 사용에서 주의사항
+
+- **?.앞의 변수는 꼭 선언되어 있어야 합니다.**
+
+```js
+// ReferenceError: user is not defined
+user?.address;
+```
+
+- **옵셔널 체이닝을 남용하지 마세요.**
+
+?.는 존재하지 않아도 괜찮은 대상에만 사용해야 한다.
+
+사용자 주소를 다루는 위 예시에서 논리상 `user`는 반드시 있어야 하는데 `address`는 필수값이 아니다. 그렇기 때문에, `user.address?.street`를 사용하는 것이 바람직하다.
+
+실수로 인해 `user`에 값을 할당하지 않았다면 바로 알아낼 수 있도록 해야 한다. 그렇지 않으면 에러를 조기에 발견하지 못하고 디버깅이 어려워진다.
+
+- **?.은 읽기나 삭제하기에는 사용할 수 있지만 쓰기에는 사용할 수 없습니다.**
+
+```js
+// user가 존재할 경우 user.name에 값을 쓰려는 의도로 아래와 같이 코드를 작성해 보았다.
+
+user?.name = "Violet"; // SyntaxError: Invalid left-hand side in assignment
+// 에러가 발생하는 이유는 undefined = "Violet"이 되기 때문이다.
+```
+
+## 
+
+> **요약**
+>
+>  옵셔널 체이닝 문법 `?.`은 세 가지 형태로 사용할 수 있다.
+>
+> 1. `obj?.prop` – `obj`가 존재하면 `obj.prop`을 반환하고, 그렇지 않으면 `undefined`를 반환함
+> 2. `obj?.[prop]` – `obj`가 존재하면 `obj[prop]`을 반환하고, 그렇지 않으면 `undefined`를 반환함
+> 3. `obj?.method()` – `obj`가 존재하면 `obj.method()`를 호출하고, 그렇지 않으면 `undefined`를 반환함
+>
+> 여러 예시를 통해 살펴보았듯이 옵셔널 체이닝 문법은 꽤 직관적이고 사용하기도 쉽다. `?.` 왼쪽 평가 대상이 `null`이나 `undefined`인지 확인하고 `null`이나 `undefined`가 아니라면 평가를 계속 진행한다.
+>
+> `?.`를 계속 연결해서 체인을 만들면 중첩 프로퍼티들에 안전하게 접근할 수 있다.
+>
+> `?.`은 `?.`왼쪽 평가대상이 없어도 괜찮은 경우에만 선택적으로 사용해야 한다.
+>
+> 꼭 있어야 하는 값인데 없는 경우에 `?.`을 사용하면 프로그래밍 에러를 쉽게 찾을 수 없으므로 이런 상황을 만들지 말도록 하자.
+
+
+
+## 4.7 심볼형
+
+객체의 **프로퍼티 키**로 오직 **문자형**과 **심볼형**만 허용이 된다.
+
+심볼은 유일한 식별자를 만들때 사용한다.
+
+```js
+let id = Symbol();      // 변수 id가 심볼이 된다.
+let id1 = Symbol("id"); // "id"라고 작성한 것처럼 설명을 붙일 수 있다.(디버깅)
+let id2 = Symbol("id"); // 설명이 동일한 심볼을 여러 개 만들어도 각 심볼값은 다르다.
+```
+
+> 심볼형은 문자형으로 자동 형 변환되지 않는다.
+>
+> 근본 자체가 유일성이기 때문에 언어 차원의 보호장치로써 자동 형 변환이 되지 않는다.
+>
+> ```js
+> let id = Symbol("id");
+> console.log(id); 
+> // TypeError: Cannot convert a Symbol value to a string
+> 
+> console.log(id.toString()) // 출력가능
+> ```
+>
+> *`console.log()` 메서드의 인자는 자동으로 문자형으로 형 변환이 일어난다.*
+
+### 숨김 프로퍼티
+
+- 심볼을 키로 사용하면 프로피터를 숨길 수 있다. 외부에서 키를 알고 있지 않는한 접근 할 수 없다.
+- 또한 키가 심볼인 경우에는 `for in` 문의 대상이 되지 않아 의도치 않게 프로퍼티가 수정되는 것을 예방할 수 있다.
+- 
+
+##### 객체 리터럴에서 심볼
+
+```js
+let id = Symbol("id");
+
+let user = {
+  name: "John",
+  [id]: 123, // "id": 123은 안된다.
+  'id': 123, //  키가 'id'인 프로퍼티가 생성.
+};
+```
+
+객체 리터럴에서 심볼형 키를 만들경우 문자형이 아닌 대괄호를 사용하여 키를 지정해야한다.
+
+
+
+### 전역심볼
+
+동일한 심볼을 여러개의 이름의 심볼로 사용하고 싶을 때 전역 심볼을 이용한다.
+
+- `Symbol.for(key)` : 이름을 이용해서 심볼을 찾는다. (없을 경우 생성)
+- `Symbol.keyFor(sym)` : 심볼을 이용해서 이름을 얻어온다.
+
+```js
+// 전역 레지스트리에서 심볼을 읽거나 존재하지 않는다면 생성
+let id = Symbol.for("id");
+
+// 동일한 이름을 이용해 동일한 심볼 생성
+let idAgain = Symbol.for("id");
+
+// 두 심볼은 같다.
+alert( id === idAgain ); // true
+
+//---------------------------------
+
+// 이름을 이용해 심볼을 찾음
+let sym = Symbol.for("name");
+let sym2 = Symbol.for("id");
+
+// 심볼을 이용해 이름을 얻음
+console.log( Symbol.keyFor(sym) ); // name
+console.log( Symbol.keyFor(sym2) ); // id
+```
+
+### 시스템 심볼
+
+객체를 미세 조정할 때 사용된다고 한다.
+
+
+
+## 4.8 객체를 원시형으로 변환하기
+
+객체는 논리 평가시  **true** 를 반환한다. **( `false` 가 아닌 무조건 `true`)**
+
+**따라서 객체는 숫자형이나 문자형으로만 형변환이 일어난다.**
+
+
+
+**숫자형으로 변환**
+
+- 객체끼리 빼기 연산
+- 수학관련 함수를 적용할 때 (예. Data객체끼리 차감하면 두날짜의 차이기 반환)
+
+**문자형으로 변환**
+
+- `console.log`, `alert` 와 같이 객체를 출력하려고 할 때 발생
+
+### ToPrimitive
+
+- 특수 객체 메서드를 사용하면 숫자형이나 문자형으로 형 변환을 원하대로 조절할 수 있다.
+- 객체 형 변환은 `hint` 라는 값으로 세 종류로 구분된다. (`hint` : 목표로 하는 자료형)
+
+**객체-문자형 변환**
+
+문자열을 기대하는 연산을 수행할 때, `hint` 가 `string` 이 된다.
+
+```js
+// 객체를 출력하려고 함
+alert(obj);
+
+// 객체를 프로퍼티 키로 사용하고 있음
+anotherObj[obj] = 123;
+```
+
+**객체-숫자형 변환**
+
+수학 연산을 적용하려 할 때, `hint` 가 `number` 가 된다.
+
+```js
+// 명시적 형 변환
+let num = Number(obj);
+
+// (이항 덧셈 연산을 제외한) 수학 연산
+let n = +obj; // 단항 덧셈 연산
+let delta = date1 - date2;
+
+// 크고 작음 비교하기
+let greater = user1 > user2;
+```
+
+**객체-default 변환**
+
+연산자가 기대하는 *자료형이 확실하지 않을 때* , `hint` 가 `default` 가 된다.
+
+```js
+// 이항 덧셈 연산은 hint로 `default`를 사용한다.
+let total = obj1 + obj2;
+
+// obj == number 연산은 hint로 `default`를 사용한다.
+if (user == 1) { ... };
+```
+
+### 객체의 형변환 알고리즘
+
+1. 객체에 `obj[Symbol.toPrimitive](hint)`메서드가 있는지 찾고, 있다면 메서드를 호출한다. `Symbol.toPrimitive`는 시스템 심볼로, 심볼형 키로 사용된다.
+
+2. 1에 해당하지 않고 hint가 **String** 이라면,
+
+   - `obj.toString()`이나 `obj.valueOf()`를 순서로 존재하는 메서드 호출
+
+3. 1과 2에 해당하지 않고, hint가 **Number** 나 **default** 라면
+
+   - `obj.valueOf()`나 `obj.toString()`을 순서로 존재하는 메서드 호출
+
+     
+
+### Symbol.toPrimitive
+
+자바스크립트엔 `Symbol.toPrimitive`라는 내장 심볼이 존재한다.
+
+`Symbol.toPrimitive` 심볼은 `hint` 를 명명하는 데 사용된다.
+
+```js
+const user = {
+  name: 'John',
+  money: 1000,
+
+  [Symbol.toPrimitive](hint) {
+    alert(`hint: ${hint}`);
+    return hint == 'string' ? `{name: "${this.name}"}` : this.money;
+  },
+};
+
+// 데모:
+alert(user); // hint: string -> {name: "John"}
+alert(+user); // hint: number -> 1000
+alert(user + 500); // hint: default -> 1500
+```
+
+
+
+### toString과 valueOf
+
+객체에 `Symbol.toPrimitive`가 없으면 자바스크립트는 아래 규칙에 따라 `toString`이나 `valueOf`를 호출한다.
+
+- hint가 `'string’` 인 경우: `toString -> valueOf` 순 (`toString`이 있다면 `toString`을 호출, `toString`이 없다면 `valueOf`를 호출함)
+- 그 외: `valueOf -> toString` 순
+
+(이 메서드들은 반드시 원시값을 반환해야한다.)
+
+일반 객체는 기본적으로 `toString`과 `valueOf`에 적용되는 다음 규칙을 따른다.
+
+- `toString`은 문자열 `"[object Object]"`을 반환
+- `valueOf`는 객체 자신을 반환
+
+```js
+let user = {name: "John"};
+
+alert(user); // [object Object]
+alert(user.valueOf() === user); // true
+```
+
+### 반환타입
+
+`Symbol.toPrimitive()` , `toString()` , `valueOf()` 이 3가지 메서드는 `hint` 에 명시된 자료형으로의 형 변환을 보장해 주지 않는다. 단 객체가 아닌 **원시값**을 **반환** 해준다.
+
+### 추가 형변환
+
+상당수의 연산자와 함수는 피연산자의 형을 변환 시킨다.
+
+예를 들어 곱셈 연산자 `*` 는 피연산자를 숫자형으로 변환 시킨다.
+
+객체가 피연산자 일때는 아래와 같이 단계를 거쳐 형변황이 된다.
+
+1. 객체는 원시형으로 변화됩니다. (변환 규칙은 위에서 설명)
+2. 변환 후 원시값이 원하는 형이 아닌 경우엔 또다시 형 변환
+
+```js
+let obj = {
+  // 다른 메서드가 없으면 toString에서 모든 형 변환을 처리
+  toString() {
+    return "2";
+  }
+};
+
+alert(obj * 2);
+// 4, 객체가 문자열 "2"로 바뀌고, 곱셈 연산 과정에서 문자열 "2"는 숫자 2로 변경된다.
+```
+
+> **참고**
+>
+> `obj.toString()`만 사용해도 '모든 변환’을 다 다룰 수 있기 때문에, 실무에선 `obj.toString()`만 구현해도 충분한 경우가 많다. 반환 값도 ‘사람이 읽고 이해할 수 있는’ 형식이기 때문에 실용성 측면에서 다른 메서드에 뒤처지지 않는다. 그리고  `obj.toString()`은 로깅이나 디버깅 목적으로도 자주 사용된다고 한다.
+
