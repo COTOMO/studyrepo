@@ -68,4 +68,4 @@
 - 모든 학습에 대한 질문은 [Discussion](https://github.com/COTOMO/studyrepo/discussions/1)을 활용해주세요.😊
 
 ---
-![ios__________](https://user-images.githubusercontent.com/79819941/133887188-479643d5-78df-43e4-81fe-64341683a7dd.jpeg)
+![Screen Shot 2021-09-18 at 8 28 04 PM](https://user-images.githubusercontent.com/79819941/133887238-a92ae9b9-876c-462c-8ab8-840ad59b5314.png)
