@@ -445,8 +445,6 @@ for (let code in codes) {
 
 
 
-
-
 ## 4.2 참조에 의한 객체 복사
 
 
@@ -567,7 +565,7 @@ Object.assign(dest, [src1, src2, src3...])
 
 `src` : 복사를 하고자 하는 객체
 
-반환값 : `dest` 를 반환
+return value : `dest` 를 반환
 
 ```js
 // 예제1
