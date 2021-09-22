@@ -1555,3 +1555,174 @@ weakSet.delete()
 >
 > 추가적인 데이터를 저장하는 용도로 활용 가능하다.
 
+
+
+
+
+## 5.9 Object.keys, values, entries
+
+
+
+Keys(), values(), entries(), 순회(iteration)에 필요한 메서드는 포괄적인 용도로 만들어졌기 때문에 메서드를 적용할 자료구조는 일련의 합의를 준수해야 한다. 그렇기 때문에 만약 커스텀 자료구조를 대상으로 순회를 해야 한다면 이 메서드들을 쓰지 못하고 직접 이에 해당되는 메서드를 구현해야 한다.
+
+- **in Map, Set, Array**
+
+```js
+map.keys()
+set.values()
+array.entiries()
+```
+
+
+
+- **in Object**
+
+```js
+Object.keys(obj)
+Object.values(obj)
+Object.entiries(obj)
+```
+
+
+
+```js
+let user = {
+  name: "John",
+  age: 30
+};
+
+Object.keys(user) // ["name", "age"]
+Object.values(user) // ["John", 30]
+Object.entries(user) // [ ["name","John"], ["age",30] ]
+```
+
+
+
+
+
+**아래와 같이 Object.values를 사용하면 프로퍼티 값을 대상으로 원하는 작업을 할 수 있다.**
+
+```js
+let user = {
+  name: "Violet",
+  age: 30
+};
+
+// 값을 순회합니다.
+for (let value of Object.values(user)) {
+  alert(value); // Violet과 30이 연속적으로 출력됨
+}
+```
+
+> **Object.keys, values, entries는 심볼형 프로퍼티를 무시한다.**
+>
+> `for..in` 반복문처럼, Object.keys, Object.values, Object.entries는 키가 심볼형인 프로퍼티를 무시한다.
+>
+> 대개는 심볼형 키를 연산 대상에 포함하지 않는 게 좋지만, 심볼형 키가 필요한 경우엔 심볼형 키만 배열 형태로 반환해주는 메서드인 [Object.getOwnPropertySymbols](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols)를 사용하면 된다. `getOwnPropertySymbols` 이외에도 키 *전체*를 배열 형태로 반환하는 메서드인 [Reflect.ownKeys(obj)](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)를 사용해도 괜찮다.
+
+
+
+> 문법이 다른이유?
+>
+> 자바스크립트에서 자료구조의 전체가 객체에 기반한다.
+>
+> 그러다보니 개발자가 다체적으로 `obj.values()` 라는 메서드르 구현해서 사용할 일이 많은데 (혹은 `map.values()` 처럼)
+>
+> 본인이 구현한 `values()` 메서드와 객체내장메서드인 `Object.values()` 를 모두 사용할 수 있게 하기 위한 유연성을 위해서 객체는 내장메서드로 남겨저있다.
+
+
+
+> **이거는 무슨 뜻일까..?**
+>
+> 두 번째 차이는 메서드 `Object.*`를 호출하면 iterable 객체가 아닌 객체의 한 종류인 배열을 반환한다는 점입니다. ‘진짜’ 배열을 반환하는 이유는 하위 호환성 때문입니다.
+
+
+
+#### 예제
+
+`Object.fromEntries(array)` : [키, 값]으로 이루어진 배열 (entries배열) 을 다시 객체로 변환하는 메서드
+
+```js
+let prices = {
+  banana: 1,
+  orange: 2,
+  meat: 4,
+};
+
+let doublePrices = Object.fromEntries(
+  Object.entries(prices).map(([key, value]) => [key, value * 2])
+);
+
+alert(doublePrices.meat); // 8
+```
+
+
+
+**과제**
+
+**프로퍼티 값 더하기** 
+
+급여 정보가 저장되어있는 객체 `salaries`가 있습니다.
+
+`Object.values` 와 `for..of` 반복문을 사용해 모든 급여의 합을 반환하는 함수 `sumSalaries(salaries)`를 만들어보세요.
+
+`salaries`가 빈 객체라면, `0`이 반환되어야 합니다.
+
+```js
+let salaries = {
+  "John": 100,
+  "Pete": 300,
+  "Mary": 250
+};
+
+alert( sumSalaries(salaries) ); // 650
+```
+
+**내 풀이**
+
+```js
+# 일반 풀이 
+const sumSalaries = salaries => {
+  let total = 0
+  for (let value of Object.values(salaries)) {
+    total += value
+  }
+  if (salaries === undefined) {
+    return 0
+  }
+  return total
+}
+
+# reduce 메서드 사용
+const sumSalariesReduce = salaries => {
+  return Object.values(salaries).reduce((acc, cur) => acc + cur, 0)
+}
+```
+
+
+
+**프로퍼티 개수 세기**
+
+객체 프로퍼티 개수를 반환하는 함수 `count(obj)`를 만들어보세요.
+
+```javascript
+let user = {
+  name: 'John',
+  age: 30
+};
+
+alert( count(user) ); // 2
+```
+
+가능한 짧게 코드를 작성해 보세요.
+
+주의: 심볼형 프로퍼티는 무시하고 ‘일반’ 프로퍼티 개수만 세주세요.
+
+**내 풀이**
+
+```js
+function count(obj) {
+  return Object.keys(obj).length;
+}
+```
+
