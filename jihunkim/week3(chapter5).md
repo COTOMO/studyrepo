@@ -1726,3 +1726,309 @@ function count(obj) {
 }
 ```
 
+
+
+## 5.10 구조 분해 할당
+
+객체와 배열은 자바스크립트에서 가장 많이 쓰이는 자료 구조인데, 주로 키를 가진 데이터 여러 개를 하나의 엔티티에 저장할 땐 객체를, 컬렉션에 대이터를 순서대로 저장할 땐 배열을 사용한다.
+
+개발을 하다 보면 함수에 객체나 배열을 전달해야 하는 경우가 생기는데, 객체나 배열에 저장된 데이터 전체가 아닌 일부만 필요한 경우가 생기곤 한다. 바로 이럴 때 객체나 배열을 변수로 '분해'할 수 있게 해주는 특별한 문법인 *구조 분해 할당(destructuring assignment)* 을 사용한다.
+
+1. **배열 분해하기**
+
+   ```js
+   // 이름과 성을 요소로 가진 배열
+   let arr = ["Wondu", "Rho"]
+   
+   // 구조 분해 할당을 이용해
+   // firstName엔 arr[0]을
+   // surname엔 arr[1]을 할당하였습니다.
+   
+   // 예전엔 이런 방식으로 배열의 요소를 나타냈었지만, 지금은 너무 Old School하다.
+   console.log(arr[0], arr[1])
+   
+   // 아래는 New School한 배열 구조 분해 할당 
+   let [firstName, surname] = arr;
+   
+   console.log(firstName); // Wondu
+   console.log(surname);  // Rho
+   
+   // split 배열 메서드를 통해 배열에 직접적으로 접근하지 않고 배열 구조 분해 할당 사용
+   let [firstName, surname] = "Wondu Rho".split(' ');
+   ```
+
+   
+
+   > ❗결코 **'분해(destructuring)'는 '파괴(destructive)'를 의미하지 않는다.**
+   >
+   > **구조 분해 할당이란** 명칭은 **어떤 것을 복사한 이후에 변수로 '분해(destructurize)'해준다는 의미** 때문에 붙여졌다. 이 과정에서 **분해 대상은 수정 또는 파괴되지 않는다.**
+   >
+   > **배열의 요소를 직접 변수에 할당하는 것보다 코드 양이 줄어든다는 점만 다르다.**
+   >
+   > ```javascript
+   > // let [firstName, surname] = arr;
+   > let firstName = arr[0];
+   > let surname = arr[1];
+   > ```
+
+
+
+2. **배열 구조 분해 할당 스킬**
+
+   > ❗ 쉼표를 사용하여 요소 무시하기(쉼표를 사용하면 필요하지 않은 배열 요소를 버릴 수 있다.
+   >
+   > ```js
+   > // 두 번째 요소는 필요하지 않음
+   > let [firstName, , title] = ["Wondu", "Wondoo", "Wondo", "Rho"];
+   > 
+   > console.log( title ); // Wondo
+   > ```
+   >
+   > ❗**할당 연산자 우측엔 모든 이터러블이 올 수 있다.** 배열뿐만 아니라 **모든 이터러블(iterable, 반복 가능한 객체)에 구조 분해 할당을 적용할 수 있다**.
+   >
+   > ```js
+   > let [a, b, c] = "abc"; // ["a", "b", "c"]
+   > let [one, two, three] = new Set([1, 2, 3]);
+   > ```
+   >
+   > ❗**할당 연산자 좌측엔 뭐든지 올 수 있다.** 할당 연산자 좌측엔 **‘할당할 수 있는(assignables)’ 것이라면 어떤 것이든 올 수 있다.**
+   >
+   > ```js
+   > let user = {};
+   > [user.name, user.surname] = "Wondoo Rho".split(' ');
+   > 
+   > alert(user.name); // Wondoo
+   > ```
+   >
+   > ❗**.entries()로 반복하기**. Object.entries(obj) 메서와 구조 분해를 조합하면 객체의 키와 값을 순회해 변수로 분해 할당할 수 있다.
+   >
+   > ```js
+   > let user = {
+   >   name: "Wondoo",
+   >   age: 32
+   > };
+   > 
+   > // 객체의 키와 값 순회하기
+   > for (let [key, value] of Object.entries(user)) {
+   >   alert(`${key}:${value}`); // name:Wondoo, age:32이 차례대로 출력
+   > }
+   > ```
+   >
+   > ❗**변수 교환 트릭**. 두 변수에 저장된 값을 교환할 때 구조 분해 할당을 사용할 수 있다.
+   >
+   > ```js
+   > let guest = "EuiMyung";
+   > let admin = "Jihun";
+   > 
+   > // 변수 guest엔 Jihun, 변수 admin엔 EuiMyung이 저장되도록 값을 교환함
+   > [guest, admin] = [admin, guest];
+   > 
+   > alert(`${guest} ${admin}`); // Jihun EuiMyung(값 교환이 성공적으로 이뤄졌다)
+   > ```
+
+
+
+### 	나머지 패턴 ‘…’
+
+> 분해하려는 객체의 프로퍼티 갯수가 할당하려는 변수의 갯수보다 많을 때, 나머지 패턴(rest pattern)을 사용하면 배열에서 했던 것처럼 나머지 프로퍼티를 어딘가에 할당하는 식으로 사용 가능하다.
+>
+> ```js
+> let options = {
+>   title: "Menu",
+>   height: 200,
+>   width: 100
+> };
+> 
+> // title = 이름이 title인 프로퍼티
+> // rest = 나머지 프로퍼티들
+> let {title, ...rest} = options;
+> 
+> // title엔 "Menu", rest엔 {height: 200, width: 100}이 할당된다.
+> console.log(rest.height);  // 200
+> console.log(rest.width);   // 100
+> ```
+
+​	
+
+> ⚠️ `let` **없이 사용하기**
+>
+> 지금까진 할당 연산 `let {…} = {…}` 안에서 변수들을 선언하였는데, `let`으로 새로운 변수를 선언하지 않고 기존에 있던 변수에 분해한 값을 할당할 수도 있는데, 이때는 반드시 주의해야할 점이 있다.
+>
+> 잘못된 코드:
+>
+> ```javascript
+> let title, width, height;
+> 
+> // SyntaxError: Unexpected token '=' 이라는 에러가 아랫줄에서 발생합니다.
+> {title, width, height} = {title: "Menu", width: 200, height: 100};
+> ```
+>
+> 자바스크립트는 표현식 안에 있지 않으면서 주요 코드 흐름 상에 있는 `{...}`를 코드 블록으로 인식한다. 코드 블록의 본래 용도는 아래와 같이 문(statement)을 묶는다.
+>
+> ```javascript
+> {
+>   // 코드 블록
+>   let message = "Hello";
+>   // ...
+>   console.log( message );
+> }
+> ```
+>
+> 위쪽 예시에선 구조 분해 할당을 위해 사용한 `{...}`를 자바스크립트가 코드 블록으로 인식해서 에러가 발생하였다.
+>
+> 에러를 해결하려면 할당문을 괄호`(...)`로 감싸 자바스크립트가 `{...}`를 코드 블록이 아닌 표현식으로 해석하면 된다.
+>
+> **하지만, 현재 내가 아래 코드를 볼 때 가독성 측면에서 좋아 보이지 않아 많이 활용하진 않을 듯 하다.**
+>
+> ```javascript
+> let title, width, height;
+> 
+> // 에러가 발생하지 않는다.
+> ({title, width, height} = {title: "Menu", width: 200, height: 100});
+> 
+> console.log( title ); // Menu
+> ```
+
+
+
+###    중첩 구조 분해
+
+​	**객체나 배열이 다른 객체나 배열을 포함하는 경우, 좀 더 복잡한 패턴을 사용하면 중첩 배열이나 객체의 정보를 추출할 수 	있는데,** 이를 **중첩 구조 분해(nested destructuring)**라고 부른다.
+
+​	아래 예시에서 객체 `options`의 `size` 프로퍼티 값은 또 다른 객체이다. `items` 프로퍼티는 배열을 값으로 가지고 있고, 	대입 연산자 좌측의 패턴은 정보를 추출하려는 객체 `options`와 같은 구조를 갖추고 있다.
+
+```javascript
+let options = {
+  size: {
+    width: 100,
+    height: 200
+  },
+  items: ["Coke", "Sprite"],
+  extra: true
+};
+
+// 코드를 여러 줄에 걸쳐 작성해 의도하는 바를 명확히 드러내고 있다.
+let {
+  size: { // size는 여기,
+    width,
+    height
+  },
+  items: [item1, item2], // items는 여기에 할당함
+  title = "Menu" // 분해하려는 객체에 title 프로퍼티가 없으므로 기본값을 사용함
+} = options;
+
+console.log(title);  // Menu
+console.log(width);  // 100
+console.log(height); // 200
+console.log(item1);  // Coke
+console.log(item2);  // Sprite
+```
+
+`extra`(할당 연산자 좌측의 패턴에는 없음)를 제외한 `options` 객체의 모든 프로퍼티가 상응하는 변수에 할당되었고,
+
+변수 `width`, `height`, `item1`, `item2`엔 원하는 값이, `title`엔 기본값이 저장되었다.
+
+그런데 위 예시에서 `size`와 `items` 전용 변수는 없다는 점에 유의하자. 전용 변수 대신 우리는 `size`와 `items` 안의 정보를 변수에 할당하였다.
+
+
+
+### 똑똑한 함수 매개변수
+
+함수에 매개변수가 많은데 이중 상당수는 선택적으로 쓰이는 경우가 종종 있는데, 사용자 인터페이스와 연관된 함수에서 이런 상황을 자주 볼 수 있다. 메뉴 생성에 관여하는 함수가 있다고 해 보자. 메뉴엔 너비, 높이, 제목, 항목 리스트 등이 필요하기 때문에 이 정보는 매개변수로 받는다.
+
+먼저 리팩토링 전의 메뉴 생성 함수를 살펴보면,
+
+```javascript
+function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
+  // ...
+}
+```
+
+문서화가 잘 되어있다면 IDE가 순서를 틀리지 않게 도움을 주긴 하겠지만  이렇게 함수를 작성하면 넘겨주는 인수의 순서가 틀려 문제가 발생할 수 있다. 이 외에도 대부분의 매개변수에 기본값이 설정되어 있어 굳이 인수를 넘겨주지 않아도 되는 경우에 문제가 발생한다.
+
+아래 코드를 살펴보자.
+
+```javascript
+// 기본값을 사용해도 괜찮은 경우 아래와 같이 undefined를 여러 개 넘겨줘야 한다.
+showMenu("My Menu", undefined, undefined, ["Item1", "Item2"])
+```
+
+상당히 코드가 더러워 보이고, 매개변수가 많으면 많아질수록 가독성은 더 떨어질 것이다.
+
+구조 분해는 바로 이럴 때 구세주가 된다.
+
+매개변수 모두를 객체에 모아 함수에 전달해, 함수가 전달받은 객체를 분해하여 변수에 할당하고 원하는 작업을 수행할 수 있도록 함수를 리팩토링해 보자.
+
+```javascript
+// 함수에 전달할 객체
+let options = {
+  title: "My menu",
+  items: ["Item1", "Item2"]
+};
+
+// 똑똑한 함수는 전달받은 객체를 분해해 변수에 즉시 할당함
+function showMenu({title = "Untitled", width = 200, height = 100, items = []}) {
+  // title, items – 객체 options에서 가져옴
+  // width, height – 기본값
+  console.log( `${title} ${width} ${height}` ); // My Menu 200 100
+  console.log( items ); // Item1, Item2
+}
+
+showMenu(options);
+```
+
+중첩 객체와 콜론을 조합하면 좀 더 복잡한 구조 분해도 가능하다.
+
+```javascript
+let options = {
+  title: "My menu",
+  items: ["Item1", "Item2"]
+};
+
+function showMenu({
+  title = "Untitled",
+  width: w = 100,  // width는 w에,
+  height: h = 200, // height는 h에,
+  items: [item1, item2] // items의 첫 번째 요소는 item1에, 두 번째 요소는 item2에 할당함
+}) {
+  console.log( `${title} ${w} ${h}` ); // My Menu 100 200
+  console.log( item1 ); // Item1
+  console.log( item2 ); // Item2
+}
+
+showMenu(options);
+```
+
+이렇게 똑똑한 함수 매개변수 문법은 구조 분해 할당 문법과 동일하다.
+
+```javascript
+function({
+  incomingProperty: varName = defaultValue
+  ...
+})
+```
+
+매개변수로 전달된 객체의 프로퍼티 `incomingProperty`는 `varName`에 할당되는데, 만약 값이 없다면 `defaultValue`가 기본값으로 사용될 것이다.
+
+참고로 이렇게 함수 매개변수를 구조 분해할 땐, 반드시 인수가 전달된다고 가정되고 사용된다는 점에 유의하자. 
+
+모든 인수에 기본값을 할당해 주려면 빈 객체를 명시적으로 전달해야 한다.
+
+```javascript
+showMenu({}); // 모든 인수에 기본값이 할당된다.
+
+showMenu(); // 에러가 발생할 수 있다.
+```
+
+이 문제를 예방하려면 빈 객체 `{}`를 인수 전체의 기본값으로 만들면 된다.
+
+```javascript
+function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
+  console.log( `${title} ${width} ${height}` );
+}
+
+showMenu(); // Menu 100 200
+```
+
+이렇게 인수 객체의 기본값을 빈 객체 `{}`로 설정하면 어떤 경우든 분해할 것이 생겨서 함수에 인수를 하나도 전달하지 않아도 에러가 발생하지 않는다.
+
